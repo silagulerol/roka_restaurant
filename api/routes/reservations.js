@@ -1,14 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const Response = require('../lib/Response');
-const CustomError = require('../lib/Error');
 const {HTTP_CODES} =require("../config/Enum")
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+
+const CustomError = require("../lib/Error");
+const AuditLogs = require("../lib/AuditLogs");
+const logger = require('../lib/logger/LoggerClass');
+const auth = require('../lib/auth')();
+
+const Enum = require("../config/Enum");
+const config= require('../config');
 
 const Reservations = require("../db/models/Reservations");
 
-router.get('/', async (req,res,next)=>{
+router.all('*', auth.authenticate(), (req, res, next) => {
+    next();
+});
+
+
+router.get('/', auth.checkRoles("reservations_view"),async (req,res,next)=>{
     try{
-        let reservations = await Reservations.find({});
+        let reservations = await Reservations.find({created_by: req.user.id});
 
         res.json(Response.successResponse(reservations));
 
@@ -18,7 +33,7 @@ router.get('/', async (req,res,next)=>{
     }
 });
 
-router.post('/add', async (req,res,next) => {
+router.post('/add', auth.checkRoles("reservations_add"),async (req,res,next) => {
     let body = req.body; 
     try{
         if (!body.reservationTime)  throw new CustomError(HTTP_CODES.BAD_REQUEST, "validation error", "reservationTime field must be filled");
@@ -29,7 +44,7 @@ router.post('/add', async (req,res,next) => {
             reservationTime: body.reservationTime,
             reservationHour: body.reservationHour,
             personNum: body.personNum,
-            //created_by: req.user.id,
+            created_by: req.user.id,
         });
 
         res.json(Response.successResponse(reservation));
@@ -40,7 +55,7 @@ router.post('/add', async (req,res,next) => {
     }
 });
 
-router.post('/update', async(req,res,next) => {
+router.post('/update', auth.checkRoles("reservations_update"),async(req,res,next) => {
     let body = req.body;
     try{
         if(!body._id) throw new CustomError(HTTP_CODES.BAD_REQUEST, "validation error", "_id field must be filled");
@@ -60,7 +75,7 @@ router.post('/update', async(req,res,next) => {
     }
 });
 
-router.post('/delete', async (req, res, next) => {
+router.post('/delete', auth.checkRoles("reservations_delete"),async (req, res, next) => {
    let body =req.body;
     try{
         if(!body._id) throw new CustomError(HTTP_CODES.BAD_REQUEST, "validation error", "_id field must be filled");
