@@ -1,10 +1,19 @@
-const express = require('express');
-const router = express.Router();
-const Response = require('../lib/Response');
-const CustomError = require('../lib/Error');
-const {HTTP_CODES} =require("../config/Enum")
+var express = require('express');
+var router = express.Router();
+const Response = require("../lib/Response");
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+
+const CustomError = require("../lib/Error");
+const AuditLogs = require("../lib/AuditLogs");
+const logger = require('../lib/logger/LoggerClass');
+const auth = require('../lib/auth')();
+const Enum = require("../config/Enum");
+const config= require('../config');
 
 const MenuItems = require("../db/models/MenuItems");
+
 
 router.get('/', async (req,res,next)=>{
     try{
@@ -19,7 +28,11 @@ router.get('/', async (req,res,next)=>{
     }
 });
 
-router.post('/add', async (req,res,next) => {
+router.all('*', auth.authenticate(), (req, res, next) => {
+    next();
+});
+
+router.post('/add', auth.checkRoles("menuitems_add"), async (req,res,next) => {
     let body = req.body; 
     try{
         if (!body.name)  throw new CustomError(HTTP_CODES.BAD_REQUEST, "validation error", "name field must be filled");
@@ -39,7 +52,7 @@ router.post('/add', async (req,res,next) => {
     }
 });
 
-router.post('/update', async(req,res,next) => {
+router.post('/update',  auth.checkRoles("menuitems_update"),async(req,res,next) => {
     let body = req.body;
     try{
         if(!body._id) throw new CustomError(HTTP_CODES.BAD_REQUEST, "validation error", "_id field must be filled");
@@ -59,7 +72,7 @@ router.post('/update', async(req,res,next) => {
     }
 });
 
-router.post('/delete', async (req, res, next) => {
+router.post('/delete',  auth.checkRoles("menuitems_delete"),async (req, res, next) => {
    let body =req.body;
     try{
         if(!body._id) throw new CustomError(HTTP_CODES.BAD_REQUEST, "validation error", "_id field must be filled");

@@ -21,7 +21,9 @@ module.exports = {
   },
   
   PASS_LENGTH: 8,
-  SUPER_ADMIN: "SUPER_ADMIN",
+  SUPER_ADMIN: "super_admin",
+  CUSTOMER:"customer",
+  MANAGER: "manager",
 
   LOG_LEVELS: {
     "INFO": "INFO",
