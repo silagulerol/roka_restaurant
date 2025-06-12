@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Roka Restaurant - Amazing & Delicious Food</title>
+
+   <!--
+    favicon 
+   -->
+    <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" >
+
+    <!--
+    google font link 
+   -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
+
+   <!--
+    custom css link
+   -->
+   <link rel="stylesheet" href="/public/stylesheets/style.css">
+
+    <!--
+    preload images
+   -->
+    <link rel="preload" as="image" href="/public/images/hero-slider-1.jpeg">
+    <link rel="preload" as="image" href="/public/images/hero-slider-2.png">
+    <link rel="preload" as="image" href="/public/images/hero-slider-3.png">
+    
+   
+
+  
+</head>
+
+<body class="reservation_body" id="body">
+  <%- include('top_bar') %>
+
+
+  <main>
+
+<!-- order.html -->
+    <div class="ordering-page" style=" display: flex; height: 100vh;">
+        <div class="left-side" id="menuItems" style =" padding: 20px; overflow-y: auto;  width: 65%; display: flex; flex-wrap: wrap; gap: 20px;" >
+            <!-- Menu items will be dynamically inserted here -->
+             
+        <section class="menu-order-section" style="padding: 0;margin: 0%;width:100%; background-color: var(--eerie-black-2); color: white">
+            <h2 class="headline-1 text-center">Menu</h2>
+            <table id="menuItems" style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+              <thead>
+                <tr style="background-color: var(--gold-crayola); color: var(--black);">
+                  <th style="padding: 12px;">Name</th>
+                  <th style="padding: 12px;">Ingredients</th>
+                  <th style="padding: 12px;">Price</th>
+                </tr>
+              </thead>
+              <tbody id="menuItemsBody">
+
+              </tbody>
+            </table>
+        </section>
+        </div>
+
+
+        <div class="right-side" id="cart" style ="margin-block-start: 50px; padding: 20px; overflow-y: overlay;  width: 35%; background-color:var(--gold-crayola);" >
+            <h2>Your Order</h2>
+            <section class="order-items-section" style="padding: 0;margin: 0%;width:100%; background-color: var(--gold-crayola); color: white">
+            <h2 class="headline-1 text-center"> </h2>
+              <table id="orderItems" style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+                <thead> 
+                  <tr style="background-color: var(--gold-crayola); color: var(--black);">
+                    <th style="padding: 4px;">Items</th>
+                    <th style="padding: 4px;">Prices</th>
+                  </tr>
+                </thead>
+                <tbody id="orderItemsBody">
+
+                </tbody>
+                
+              </table>
+              
+              <button id="clearOrders" style="display:none; padding: 2px; background-color: var(--gold-crayola); color: white;" onclick="clearOrders()">Clear All Orders</button>
+        </section>
+        </div>
+        </div>
+
+      
+    </div>
+
+   
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  
+    <script>
+    async function loadMenuItems() {
+      try {
+        // getting items from DB
+        const res = await axios.get("/api/menuitems");
+        const items = res.data.data;
+        
+        // clear order table
+        const tbody = document.getElementById("menuItemsBody");
+        tbody.innerHTML = "";
+
+        // filing the row
+        items.forEach((i) => {
+          const tr = document.createElement("tr");
+
+          tr.innerHTML = `
+            <td style="padding: 12px;">${i.name}</td>
+            <td style="padding: 12px;">${i.price}</td>
+            <td style="padding: 12px;">${i.ingredients}</td>
+            <td style="padding: 12px;">
+              <button  style="color: white" onclick="addToCart('${i.price}', '${i.name}')">Add To Card</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        
+      } catch (err) {
+        console.error("Error loading reservations:", err);
+      }
+    }
+
+    async function addToCart(price, name){
+      try {
+        const tbody = document.getElementById("orderItemsBody");
+        const tr = document.createElement("tr");
+        
+        tr.innerHTML = `
+        <td style="padding: 2px; background-color: var(--gold-crayola); color: var(--black);">${name}</td>
+        <td style="padding: 2px; background-color: var(--gold-crayola); color: var(--black);">${price}</td>
+        <td style="padding: 2px;">
+              <button  style="padding: 2px; background-color: var(--gold-crayola); color: var(--black);" onclick="deleteOrder(this)">Delete</button>
+        </td>
+      `
+        tbody.appendChild(tr);
+
+        document.getElementById("clearOrders").style.display = "inline-block";
+      } catch(err){
+        console.log(err);
+        console.error("Delete failed");
+      }
+    }
+    
+    async function deleteOrder(buttonElement){
+      const row= buttonElement.closest("tr");
+      if (row) {
+      row.remove();
+      }
+    }
+
+    async function clearOrders(){
+      const tbody = document.getElementById("orderItemsBody");
+      tbody.innerHTML = "";
+      document.getElementById("clearOrders").style.display = "none";
+    }
+
+    window.addEventListener("DOMContentLoaded", loadMenuItems);
+    </script>
+  <%- include('script') %>
+</body>
+</html>
