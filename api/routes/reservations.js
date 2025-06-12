@@ -23,7 +23,7 @@ router.all('*', auth.authenticate(), (req, res, next) => {
 
 router.get('/', auth.checkRoles("reservations_view"),async (req,res,next)=>{
     try{
-        let reservations = await Reservations.find({created_by: req.user.id});
+        let reservations = await Reservations.find({created_by: req.user.id}).populate('created_by').populate('created_by', 'first_name last_name');
 
         res.json(Response.successResponse(reservations));
 
@@ -41,8 +41,11 @@ router.post('/add', auth.checkRoles("reservations_add"),async (req,res,next) => 
         if (!body.reservationHour)  throw new CustomError(HTTP_CODES.BAD_REQUEST, "validation error", "reservationHour field must be filled");
         
         let reservation = await Reservations.create({
+            first_name: body.first_name,
+            last_name: body.last_name,
             reservationTime: body.reservationTime,
             reservationHour: body.reservationHour,
+            message:body.message,
             personNum: body.personNum,
             created_by: req.user.id,
         });
@@ -64,6 +67,10 @@ router.post('/update', auth.checkRoles("reservations_update"),async(req,res,next
         if(body.reservationTime) updates.reservationTime = body.reservationTime;
         if(body.reservationHour) updates.reservationHour =body.reservationHour;
         if(body.personNum) updates.personNum =body.personNum;
+        if(body.message) updates.message =body.message;
+        if(body.first_name) updates.first_name =body.first_name;
+        if(body.last_name) updates.last_name =body.last_name;
+        if(body.phone) updates.phone =body.phone;
         if(typeof body.is_active === "boolean") updates.is_active =body.is_active;
 
        await Reservations.updateOne( { _id: body._id}, updates );

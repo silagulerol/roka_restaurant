@@ -3,6 +3,7 @@ if(process.env.NODE_ENV != "production")
 
 var createError = require('http-errors');
 var express = require('express');
+const router = express.Router();
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -17,7 +18,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
+app.use('/', require("./routes/home"));
 
 app.use('/api', require("./routes/index"));
 
@@ -37,5 +41,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;

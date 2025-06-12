@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema({
     reservationTime: Date,
     reservationHour: String,
-    personNum: Number,
+    first_name:String,
+    last_name:String,
+    personNum: String,
+    message:String,
     accepted: Boolean,
     is_active:Boolean,
     created_by: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
