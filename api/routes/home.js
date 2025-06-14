@@ -28,4 +28,8 @@ router.get('/reservations', (req, res) => {
 router.get('/orders', (req, res) => {
     res.render("orders");
 });
+
+router.get('/manager_order', (req, res) => {
+    res.render("manager_order");
+});
 module.exports = router;

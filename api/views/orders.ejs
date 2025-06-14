@@ -44,7 +44,7 @@
 
 <!-- order.html -->
     <div class="ordering-page"  style=" display: flex; height: 100vh;  background-image: url('/public/images/special-dish-banner.jpg');background-size: cover; background-position: center; ">
-        <div class="left-side" id="menuItems" style =" padding: 20px; overflow-y: auto;  width: 65%; display: flex; flex-wrap: wrap; gap: 20px;" >
+        <div class="left-side" id="menuItems" style =" padding: 20px; overflow-y: auto;  width: 70%; display: flex; flex-wrap: wrap; gap: 20px;" >
             <!-- Menu items will be dynamically inserted here -->
              
         <section class="menu-order-section" style="padding: 0;margin: 0%; margin-top: 20px;width:100%; background-color: transparent; color: white; ">
@@ -55,6 +55,7 @@
                   <th style="padding: 12px;   border: 3px solid white;">Name</th>
                   <th style="padding: 12px;   border: 3px solid white;">Ingredients</th>
                   <th style="padding: 12px;  border: 3px solid white;">Price</th>
+                  <th style="padding: 12px;  border: 3px solid white;">Add To Basket</th>
                 </tr>
               </thead>
               <tbody id="menuItemsBody" style="border: 3px solid white;">
@@ -65,11 +66,36 @@
         </div>
 
 
-        <div class="right-side" id="cart" style ="margin-block-start: 50px; padding: 20px; overflow-y: overlay;  width: 25%; background-color:var(--gold-crayola); " >
-          <h2>Your Order</h2>
+        <div class="right-side" id="cart" style ="margin-block-start: 50px; padding: 20px; overflow-y: overlay;  width: 35%; background-color:var(--gold-crayola); " >
+          <h2>Your Basket</h2>
+          
           <section class="order-items-section" style="padding: 0;margin: 0%;width:100%; background-color: var(--gold-crayola); color: white ;opacity: 0.7;">
-            <h2 class="headline-1 text-center"> </h2>
-              <table id="orderItems" style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+            <h2 class="headline-1 text-center"  >Your Completed Orders </h2>
+              <table id="completedOrders" style=" width: 100%; margin-top: 20px; padding-left:0;  border-collapse: collapse;">
+                <thead> 
+                  <tr style="background-color: var(--gold-crayola); color: var(--black);">
+                    <th style="padding: 4px;">Collection Hours</th>
+                    <th style="padding: 4px;">Prices</th>
+                    <th style="padding: 4px;">Items</th>
+                    <th style="padding: 4px;">Accepted Situation</th>
+                  </tr>
+                </thead>
+                <tbody id="completedOrderItemsBody"> 
+                </tbody>
+
+              </table>
+          </section>
+
+
+          
+          
+          <section class="order-items-section" style="padding: 0;margin: 0%;width:100%; background-color: var(--gold-crayola); color: white ;opacity: 0.7;">
+            <h2 class="headline-1 text-center">Add New Order </h2>
+            <label for="collectionDate" style="color: white;">Collection Date:</label>
+            <input type="date" id="collectionDate" style="margin-bottom: 10px; display: block;" /
+            <label for="collectionHour" style="color: white;">Collection Hour:</label>
+            <input type="time" id="collectionHour" style="margin-bottom: 10px; display: block;" />
+              <table id="orderItems" style="width: 100%; margin-top: 20px; padding-left:0;  border-collapse: collapse;">
                 <thead> 
                   <tr style="background-color: var(--gold-crayola); color: var(--black);">
                     <th style="padding: 4px;">Items</th>
@@ -82,6 +108,8 @@
                 
               </table>
               
+              
+              <button id="submitOrder" style="display:none; padding: 2px; background-color: var(--gold-crayola); color: white;"" onclick="submitOrder()">Submit Order</button>
               <button id="clearOrders" style="display:none; padding: 2px; background-color: var(--gold-crayola); color: white;" onclick="clearOrders()">Clear All Orders</button>
          </section>
         </div>
@@ -98,6 +126,9 @@
 
   
     <script>
+    let orderItems = [];
+    let totalPrice = 0;
+
     async function loadMenuItems() {
       try {
         // getting items from DB
@@ -114,58 +145,180 @@
 
           tr.innerHTML = `
             <td style="padding: 12px;">${i.name}</td>
+            <td style="padding: 12px;">${i.ingredients.join(', ')}</td>
             <td style="padding: 12px;">${i.price}</td>
-            <td style="padding: 12px;">${i.ingredients}</td>
             <td style="padding: 12px;">
-              <button  style="color: white" onclick="addToCart('${i.price}', '${i.name}')">Add To Card</button>
+              <button  style="color: white" onclick="addToCart('${i._id}', '${i.name}', ${i.price})">Add To Basket</button>
             </td>
           `;
           tbody.appendChild(tr);
         });
-
-        
       } catch (err) {
         console.error("Error loading reservations:", err);
       }
     }
 
-    async function addToCart(price, name){
+    async function addToCart(itemId, name, price){
       try {
-        
+        price = parseFloat(price);
+        orderItems.push(itemId);
+        totalPrice += price;
+
         const tbody = document.getElementById("orderItemsBody");
         const tr = document.createElement("tr");
         
         tr.innerHTML = `
-        <td style="padding: 2px; background-color: var(--gold-crayola); color: var(--black);">${name}</td>
-        <td style="padding: 2px; background-color: var(--gold-crayola); color: var(--black);">${price}</td>
+        <td style="background-color: var(--gold-crayola); color: var(--black);">${name}</td>
+        <td style="background-color: var(--gold-crayola); color: var(--black);">${price}</td>
         <td style="padding: 2px;">
-              <button  style="padding: 2px; background-color: var(--gold-crayola); color: var(--black);" onclick="deleteOrder(this)">Delete</button>
+              <button  style="padding: 2px; background-color: var(--gold-crayola); color: var(--black);" onclick="deleteOrder(this, '${itemId}', ${price})">Delete</button>
         </td>
       ` 
         tbody.appendChild(tr);
 
         document.getElementById("clearOrders").style.display = "inline-block";
+        document.getElementById("submitOrder").style.display = "inline-block";
+
       } catch(err){
         console.log(err);
         console.error("Delete failed");
       }
     }
     
-    async function deleteOrder(buttonElement){
-      const row= buttonElement.closest("tr");
-      if (row) {
-      row.remove();
+     async function loadOrders(){
+
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        return;
       }
+
+      try {
+        const res = await axios.get("/api/orders", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        const orders = res.data.data;
+        if(orders.length == 0){
+          tbody.innerHTML = "Make a new Order";
+        }
+
+        const tbody = document.getElementById("completedOrderItemsBody");
+        tbody.innerHTML = "";
+        
+       orders.forEach((i) => {
+          const tr = document.createElement("tr");
+          console.log(orders);
+          tr.innerHTML = `
+            <td style="padding: 12px;">${i.collectionHour}</td>
+            <td style="padding: 12px;">${i.price}</td>
+            <td style="padding: 12px;"> 
+              <ol>
+                ${i.items.map(item => `<li>${item.name}</li>`).join('')}
+              </ol>
+            </td>
+            <td style="padding: 12px;">${i.isActive}</td>
+            <td style="padding: 12px;">
+              <button  style="color: white" onclick="deleteOrder(this, '${i._id}')">Delete</button>
+            </td>
+          `;
+          
+          tbody.appendChild(tr);
+        });
+
+
+      } catch(err){
+        console.log(err);
+        console.error("Delete failed");
+      }
+    }
+
+    
+    async function deleteOrder(buttonElement, orderId){
+      try {
+        const token = localStorage.getItem("accessToken");
+            if (!token) {
+              return;
+            }
+        const res =await axios.post('/api/orders/delete', {_id: orderId}, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+        });
+
+        const row= buttonElement.closest("tr");
+        if (row) {
+        row.remove();
+        }
+
+        
+
+      } catch(err){
+        console.error("Error deleting orders:", err);
+      }
+    }
+
+
+    async function deleteRow(buttonElement, itemId, price){
+      orderItems = orderItems.filter(id => id !== itemId);
+      totalPrice -= price;
+      const row= buttonElement.closest("tr");
+        if (row) {
+          row.remove();
+        }
     }
 
     async function clearOrders(){
       const tbody = document.getElementById("orderItemsBody");
       tbody.innerHTML = "";
       document.getElementById("clearOrders").style.display = "none";
+      document.getElementById("submitOrder").style.display = "none";
+    }
+
+    async function submitOrder() {
+      try {
+        const token = localStorage.getItem("accessToken");
+        const now = new Date();
+
+        const collectionDate = document.getElementById("collectionDate").value;
+        const collectionHour = document.getElementById("collectionHour").value;
+
+        if (!collectionDate || !collectionHour) {
+          alert("Please fill in both collection date and time.");
+          return;
+        }
+        const collectionTimeISO = new Date(`${collectionDate}T${collectionHour}`).toISOString();
+
+        const payload = {
+          collectionTime: collectionTimeISO,
+          collectionHour: collectionHour,
+          price: totalPrice,
+          items: orderItems  // Later you can refactor this to use item IDs
+        };
+      
+        const res = await axios.post("/api/orders/add", payload, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+      
+        alert("Order submitted successfully!");
+        orderItems = [];
+        totalPrice = 0;
+        clearOrders();  // clear UI
+        document.getElementById("collectionDate").value = "";
+        document.getElementById("collectionHour").value = "";
+        loadOrders();
+
+      } catch (err) {
+        console.error("Order submission failed", err.response?.data || err);
+        alert("Order failed to submit.");
+      }
     }
 
  
     window.addEventListener("DOMContentLoaded", loadMenuItems);
+    window.addEventListener("DOMContentLoaded", loadOrders);
     </script>
   <%- include('script') %>
 </body>
