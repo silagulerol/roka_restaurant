@@ -4,9 +4,9 @@ const schema = mongoose.Schema({
     collectionTime: Date,
     collectionHour: String,
     price: Number,
-    items:  [{type: mongoose.Schema.Types.ObjectId, ref: 'Role'}],
+    items:  [{type: mongoose.Schema.Types.ObjectId, ref: 'menu_items'}],
     accepted: Boolean,
-    is_active:Boolean,
+    is_active:{type:Boolean, default:false},
     created_by: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
 }, {
     versionKey: false,
