@@ -113,6 +113,12 @@ module.exports = {
             description:"Reservations view"
         },
         {
+            key:"all_reservations_view",
+            name:"All Reservations View",
+            group:"RESERVATIONS",
+            description:"All reservations view"
+        },
+        {
             key:"reservations_add",
             name:"Reservations Add",
             group:"RESERVATIONS",
@@ -141,6 +147,12 @@ module.exports = {
             name:"Orders View",
             group:"ORDERS",
             description:"Orders view"
+        },
+        {
+            key:"all_orders_view",
+            name:"All Orders View",
+            group:"ORDERS",
+            description:"All orders view"
         },
         {
             key:"orders_add",

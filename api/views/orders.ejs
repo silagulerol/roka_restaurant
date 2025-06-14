@@ -43,21 +43,21 @@
   <main>
 
 <!-- order.html -->
-    <div class="ordering-page" style=" display: flex; height: 100vh;">
+    <div class="ordering-page"  style=" display: flex; height: 100vh;  background-image: url('/public/images/special-dish-banner.jpg');background-size: cover; background-position: center; ">
         <div class="left-side" id="menuItems" style =" padding: 20px; overflow-y: auto;  width: 65%; display: flex; flex-wrap: wrap; gap: 20px;" >
             <!-- Menu items will be dynamically inserted here -->
              
-        <section class="menu-order-section" style="padding: 0;margin: 0%;width:100%; background-color: var(--eerie-black-2); color: white">
+        <section class="menu-order-section" style="padding: 0;margin: 0%; margin-top: 20px;width:100%; background-color: transparent; color: white; ">
             <h2 class="headline-1 text-center">Menu</h2>
-            <table id="menuItems" style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+            <table id="menuItems" style="width: 80%; margin-top: 20px;  border: 3px solid white; background-color: rgba(0, 0, 0, 0.5);">
               <thead>
                 <tr style="background-color: var(--gold-crayola); color: var(--black);">
-                  <th style="padding: 12px;">Name</th>
-                  <th style="padding: 12px;">Ingredients</th>
-                  <th style="padding: 12px;">Price</th>
+                  <th style="padding: 12px;   border: 3px solid white;">Name</th>
+                  <th style="padding: 12px;   border: 3px solid white;">Ingredients</th>
+                  <th style="padding: 12px;  border: 3px solid white;">Price</th>
                 </tr>
               </thead>
-              <tbody id="menuItemsBody">
+              <tbody id="menuItemsBody" style="border: 3px solid white;">
 
               </tbody>
             </table>
@@ -65,9 +65,9 @@
         </div>
 
 
-        <div class="right-side" id="cart" style ="margin-block-start: 50px; padding: 20px; overflow-y: overlay;  width: 35%; background-color:var(--gold-crayola);" >
-            <h2>Your Order</h2>
-            <section class="order-items-section" style="padding: 0;margin: 0%;width:100%; background-color: var(--gold-crayola); color: white">
+        <div class="right-side" id="cart" style ="margin-block-start: 50px; padding: 20px; overflow-y: overlay;  width: 25%; background-color:var(--gold-crayola); " >
+          <h2>Your Order</h2>
+          <section class="order-items-section" style="padding: 0;margin: 0%;width:100%; background-color: var(--gold-crayola); color: white ;opacity: 0.7;">
             <h2 class="headline-1 text-center"> </h2>
               <table id="orderItems" style="width: 100%; margin-top: 20px; border-collapse: collapse;">
                 <thead> 
@@ -83,8 +83,9 @@
               </table>
               
               <button id="clearOrders" style="display:none; padding: 2px; background-color: var(--gold-crayola); color: white;" onclick="clearOrders()">Clear All Orders</button>
-        </section>
+         </section>
         </div>
+
         </div>
 
       
@@ -130,6 +131,7 @@
 
     async function addToCart(price, name){
       try {
+        
         const tbody = document.getElementById("orderItemsBody");
         const tr = document.createElement("tr");
         
@@ -139,7 +141,7 @@
         <td style="padding: 2px;">
               <button  style="padding: 2px; background-color: var(--gold-crayola); color: var(--black);" onclick="deleteOrder(this)">Delete</button>
         </td>
-      `
+      ` 
         tbody.appendChild(tr);
 
         document.getElementById("clearOrders").style.display = "inline-block";
@@ -162,6 +164,7 @@
       document.getElementById("clearOrders").style.display = "none";
     }
 
+ 
     window.addEventListener("DOMContentLoaded", loadMenuItems);
     </script>
   <%- include('script') %>
