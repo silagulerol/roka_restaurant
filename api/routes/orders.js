@@ -21,6 +21,18 @@ router.all('*', auth.authenticate(), (req, res, next) => {
     next();
 });
 
+router.get('/all',auth.checkRoles("all_orders_view"), async (req,res,next)=>{
+    try{
+        let orders = await Orders.find({ });
+
+        res.json(Response.successResponse(orders));
+
+    }catch (err){
+        let errorResponse = Response.errorResponse(err);
+        res.status(errorResponse.code).json(errorResponse);
+    }
+});
+
 router.get('/',auth.checkRoles("orders_view"), async (req,res,next)=>{
     try{
         let orders = await Orders.find({created_by: req.user.id});

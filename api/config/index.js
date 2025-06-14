@@ -7,6 +7,6 @@ module.exports={
         "EXPIRE_TIME": !isNaN(parseInt(process.env.TOKEN_EXPIRE_TIME)) ? parseInt(process.env.TOKEN_EXPIRE_TIME) : 24 * 60 * 60 
     },
     "DEFAULT_LANG": process.env.DEFAULT_LANG || "EN",
-    "FILE_UPLOAD_PATH": process.env.FILE_UPLOAD_PATH
-    
+    "FILE_UPLOAD_PATH": process.env.FILE_UPLOAD_PATH,
+    "MANAGER_ROLE_ID": "684b5260c6819a4670387f95" || ""
 }

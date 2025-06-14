@@ -14,6 +14,7 @@ const config = require('../config');
 const auth = require('../lib/auth')();
 const  { rateLimit } = require( 'express-rate-limit')
 const  RateLimitMongo = require('rate-limit-mongo');
+const role_privileges = require('../config/role_privileges');
 
 
 const limiter = rateLimit({
@@ -92,12 +93,13 @@ router.post('/auth', async (req, res, next) => {
     Users.validateFieldsBeforeAuth(email, password);
 
     let user = await Users.findOne({email});
-
     if(!user)  throw new CustomError(Enum.HTTP_CODES.UNAUTHORIZED, "validation error", "the email or password wrong"); 
     if (!user.validatePassword(password)) throw new CustomError(Enum.HTTP_CODES.UNAUTHORIZED, "validation error", "the email or password wrong"); ;
-
+    let userRole= await UserRoles.findOne({user_id: user._id});
+    
     let payload = {
       id : user._id,
+      role_id : userRole.role_id,
       exp: parseInt(Date.now() / 1000 ) + config.JWT.EXPIRE_TIME
     }
 
@@ -105,10 +107,11 @@ router.post('/auth', async (req, res, next) => {
 
     let userData = {
       _id: user._id,
+      role_id : userRole.role_id,
       first_name: user.first_name,
       last_name: user.last_name
     }
-
+    
     res.json(Response.successResponse({token, user: userData}));
 
   }catch(err){
@@ -120,6 +123,8 @@ router.post('/auth', async (req, res, next) => {
 router.all('*', auth.authenticate(), (req, res, next) => {
     next();
 });
+
+
 
 router.get('/', auth.checkRoles("user_view"), async (req, res,next)=> {
     try {

@@ -21,16 +21,35 @@ router.all('*', auth.authenticate(), (req, res, next) => {
 });
 
 
-router.get('/', auth.checkRoles("reservations_view"),async (req,res,next)=>{
-    try{
-        let reservations = await Reservations.find({created_by: req.user.id}).populate('created_by').populate('created_by', 'first_name last_name');
+router.get('/', async (req, res, next) => {
+  try {
+    const userPrivileges = req.user.roles.map(r => r?.key).filter(Boolean);
 
-        res.json(Response.successResponse(reservations));
+    const isManager = userPrivileges.includes("all_reservations_view");
+    const isRegular = userPrivileges.includes("reservations_view");
 
-    }catch (err){
-        let errorResponse = Response.errorResponse(err);
-        res.status(errorResponse.code).json(errorResponse);
+    if (!isManager && !isRegular) {
+      const response = Response.errorResponse(
+        new CustomError(HTTP_CODES.UNAUTHORIZED, "Need Permission", "You do not have permission to view reservations.")
+      );
+      return res.status(response.code).json(response);
     }
+
+    let reservations;
+
+    if (isManager) {
+      reservations = await Reservations.find({ })
+        .populate('created_by', 'first_name last_name');
+    } else {
+      reservations = await Reservations.find({ created_by: req.user.id })
+        .populate('created_by', 'first_name last_name');
+    }
+
+    res.json(Response.successResponse(reservations));
+  } catch (err) {
+    const errorResponse = Response.errorResponse(err);
+    res.status(errorResponse.code).json(errorResponse);
+  }
 });
 
 router.post('/add', auth.checkRoles("reservations_add"),async (req,res,next) => {
