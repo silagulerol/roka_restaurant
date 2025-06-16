@@ -23,7 +23,14 @@
     custom css link
    -->
    <link rel="stylesheet" href="/public/stylesheets/style.css">
+  <style>
+      html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
 
+  </style>
     <!--
     preload images
    -->
@@ -38,27 +45,29 @@
 
 <body class="reservation_body" id="body">
   <%- include('top_bar') %>
-
+  
 
   <main>
 
 <!-- order.html -->
-    <div class="ordering-page"  style=" display: flex; height: 100vh;  background-image: url('/public/images/special-dish-banner.jpg');background-size: cover; background-position: center; ">
-        <div class="left-side" id="menuItems" style =" padding: 20px; overflow-y: auto;  width: 100%; display: flex; flex-wrap: wrap; gap: 20px;" >
+    <div class="ordering-page"  style="overflow-y: hidden; display: flex; height: 100vh;  background-image: url('/public/images/special-dish-banner.jpg');background-size: cover; background-position: center; ">
+        
+      <div class="left-side" id="menuItems" style =" padding: 20px; overflow-y: auto;  width: 100%; display: flex; flex-wrap: wrap; gap: 20px;" >
             <!-- Menu items will be dynamically inserted here -->
-             
+           
         <section class="order-section" style="padding: 0;margin: 0%; margin-top: 20px;width:100%; background-color: transparent; color: white; ">
-            <h2 class="headline-1 text-center">WAITING ORDERS</h2>
-            <table id="Orders" style="width: 80%; margin-top: 20px;  border: 3px solid white; background-color: rgba(0, 0, 0, 0.5);">
+          <br>    
+          <h2 class="headline-1 text-center">WAITING ORDERS</h2>
+            <table id="Orders" style="width: 80%; margin-top: 20px; background-color: rgba(0, 0, 0, 0.6);">
               <thead>
                 <tr style="background-color: var(--gold-crayola); color: var(--black);">
-                  <th style="padding: 12px;   border: 3px solid white;">Collection Time</th>
-                  <th style="padding: 12px;   border: 3px solid white;">Collection Hour</th>
-                  <th style="padding: 12px;   border: 3px solid white;">Price</th>
-                  <th style="padding: 12px;   border: 3px solid white;">First Name</th>
-                  <th style="padding: 12px;   border: 3px solid white;">Last Name</th>
-                  <th style="padding: 12px;  border: 3px solid white;">Items</th>
-                  <th style="padding: 12px;  border: 3px solid white;">Accept or Delete</th>
+                  <th style="padding: 12px; width:10%;  border: 1px solid white;">Collection Time</th>
+                  <th style="padding: 12px;   border: 1px solid white;">Collection Hour</th>
+                  <th style="padding: 12px;   border: 1px solid white;">Price</th>
+                  <th style="padding: 12px;   border: 1px solid white;">First Name</th>
+                  <th style="padding: 12px;   border: 1px solid white;">Last Name</th>
+                  <th style="padding: 12px; width:18%; border: 1px solid white;">Items</th>
+                  <th  style="padding: 12px;  border: 1px solid white;">Accept or Delete</th>
                 </tr>
               </thead>
               <tbody id="ordersBody" style="border: 3px solid white;">
@@ -69,7 +78,7 @@
         </div>
 
         
-        <div class="right-side" id="cart" style ="margin-block-start: 50px; padding: 20px;overflow-y: overlay;  width: 40%; background-color:var(--gold-crayola); " >
+        <div class="right-side" id="cart" style ="margin: 20px; margin-block-start: 50px; padding: 20px;overflow-y: overlay;  width: 40%; background-color:var(--gold-crayola); " >
           <h2>Accepted Order</h2>
           <section class="order-items-section" style="padding: 0;margin: 0%;width:100%; background-color: var(--gold-crayola); color: white ;opacity: 0.7;">
             <h2 class="headline-1 text-center"> </h2>
@@ -77,9 +86,9 @@
             <table id="orderItems" style="width: 100%; margin-top: 20px; padding-left:0;  border-collapse: collapse;">
                 <thead> 
                   <tr style="background-color: var(--gold-crayola); color: var(--black);">
-                    <th style="padding: 4px;">First Name</th>
-                    <th style="padding: 4px;">Last Name</th>
-                    <th style="padding: 4px;">Prices</th>
+                    <th class="span title-2" style="padding: 4px;">First Name</th>
+                    <th class="span title-2" style="padding: 4px;">Last Name</th>
+                    <th class="span title-2" style="padding: 4px;">Prices</th>
                   </tr>
                 </thead>
                 <tbody id="orderItemsBody">
@@ -127,21 +136,26 @@
         // filing the row
         orders.forEach((i) => {
           const tr = document.createElement("tr");
-          console.log(orders);
+          const dateObj = new Date(i.collectionTime);
+          const formattedDate = `${String(dateObj.getDate()).padStart(2, '0')}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${dateObj.getFullYear()}`;
+  
+          const formattedHour = i.collectionHour?.slice(0, 5) || "--:--";
+
           tr.innerHTML = `
-            <td style="padding: 12px;">${i.collectionTime}</td>
-            <td style="padding: 12px;">${i.collectionHour}</td>
-            <td style="padding: 12px;">${i.price}</td>
-            <td style="padding: 12px;">${i.created_by?.first_name || 'N/A'} </td>
-            <td style="padding: 12px;">${i.created_by?.last_name || 'N/A'}  </td>
-            <td style="padding: 12px;"> 
+            <td style="padding: 12px;border-bottom: 1px solid white;">${formattedDate}</td>
+            <td style="padding: 12px;border-bottom: 1px solid white;">${i.price}</td>
+            <td style="padding: 12px;border-bottom: 1px solid white;">${formattedHour}</td>
+            <td style="padding: 12px;border-bottom: 1px solid white;">${i.created_by?.first_name || 'N/A'} </td>
+            <td style="padding: 12px;border-bottom: 1px solid white;">${i.created_by?.last_name || 'N/A'}  </td>
+            <td style="padding: 12px;border-bottom: 1px solid white;"> 
               <ol>
                 ${i.items.map(item => `<li>${item.name}</li>`).join('')}
               </ol>
             </td>
-            <td style="padding: 12px;">
-              <button  style="color: white" onclick="deleteOrder(this, '${i._id}')">Delete</button>
-              <button  style="color: white" onclick="accept(this, '${i._id}', '${i.price}', '${i.created_by?.first_name}','${i.created_by?.last_name}')">Accept</button>
+            <td style="padding: 12px;border-bottom: 1px solid white;">
+              <button  class="btn btn-secondary" style="color: white; height: 50%;" onclick="deleteOrder(this, '${i._id}')">Delete</button>
+              <br>
+              <button class="btn btn-secondary" style="color: white; height: 50%;" onclick="accept(this, '${i._id}', '${i.price}', '${i.created_by?.first_name}','${i.created_by?.last_name}')">Accept</button>
             </td>
           `;
           

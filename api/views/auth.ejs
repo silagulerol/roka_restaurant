@@ -140,7 +140,7 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
  
   <script>
-    const manager_role_id = "684b5260c6819a4670387f95";
+    
     document.querySelector("form").addEventListener("submit", async (e) => {
       e.preventDefault();
     
@@ -155,20 +155,19 @@
         const user = res.data.data.user;
         localStorage.setItem("accessToken", token);
         localStorage.setItem("accessUser", user);
-        
-        alert("Login successful!");
 
-        if (user.role_id == manager_role_id){
-          window.location.href = "/home_manager";  
+        alert("Login successful!");
+        console.log(user.manager_role_id);
+        if (user.role_id == user.manager_role_id){
+          window.location.href = "api/users/manager_home";  
         }else{
-          window.location.href = "/home_logged_in";  // redirect to protected route
+          window.location.href = "api/users/customer_home";  // redirect to protected route
         }
       } catch (err) {
         alert(err.response?.data?.error?.description || "Login failed");
       }
     });
-  </script>
-  
 
+  </script>
 </body>
 </html>

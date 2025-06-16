@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Roka Restaurant - Amazing & Delicious Food</title>
+
+   <!--
+    favicon 
+   -->
+    <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" >
+
+    <!--
+    google font link 
+   -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Forum&display=swap" rel="stylesheet">
+
+   <!--
+    custom css link
+   -->
+   <link rel="stylesheet" href="/public/stylesheets/style.css">
+
+    <!--
+    preload images
+   -->
+    <link rel="preload" as="image" href="/public/images/hero-slider-1.jpeg">
+    <link rel="preload" as="image" href="/public/images/hero-slider-2.png">
+    <link rel="preload" as="image" href="/public/images/hero-slider-3.png">
+    
+  
+</head>
+<body id="top">
+    
+    <%- include('preloader') %>
+    <%- include('top_bar') %>
+    
+    <!--
+      Menu
+     -->
+    <main>
+         <section class="section menu" aria-label="menu-label" id="menu">
+            <div class="container">
+                <br>
+                <h1 class="headline-1 section-title text-center">Delicious Menu</h1>
+
+                <ul class="grid-list">
+                    <!--
+                    <li>
+                        <div class="menu-card hover:card">
+                            <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                                <img src="/public/images/menu-1.png" width="100" height="100" loading="lazy" alt="Greek Salad" class="img-cover">
+                            </figure>
+
+                            <div>
+                                <div class="title-wrapper">
+                                    <h3 class="title-3">
+                                        <a href="#" class="card-title">Iskender Lamb</a>
+                                    </h3>
+
+                                    <span class="badge label-1">Seasonal</span>
+
+                                    <span class="span title-2">£16.00</span>
+                                </div>
+
+                                <p class="card-text label-1">
+                                    Lamb kofte kebab on turkish flat bread with rich tomato sauce yogurt and drizzle of butter.      
+                                </p>             
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="menu-card hover:card">
+                            <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                                <img src="/public/images/menu-1.png" width="100" height="100" loading="lazy" alt="Greek Salad" class="img-cover">
+                            </figure>
+
+                            <div>
+                                <div class="title-wrapper">
+                                    <h3 class="title-3">
+                                        <a href="#" class="card-title">Iskender Chicken</a>
+                                    </h3>
+
+                                    <span class="span title-2">£15.00</span>
+                                </div>
+
+                                <p class="card-text label-1">
+                                    Chicken kofte kebab on turkish flat bread with rich tomato sauce yogurt and drizzle of butter.     
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="menu-card hover:card">
+                            <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                                <img src="/public/images/menu-1.png" width="100" height="100" loading="lazy" alt="Greek Salad" class="img-cover">
+                            </figure>
+
+                            <div>
+                                <div class="title-wrapper">
+                                    <h3 class="title-3">
+                                        <a href="#" class="card-title">Roka Kebab Lamb</a>
+                                    </h3>
+
+                                    <span class="span title-2">£18.00</span>
+                                </div>
+
+                                <p class="card-text label-1">
+                                    Marinated lamb cooked over barbecue grill with fried aubergines rich tomato sauce and melted cheese.                            
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="menu-card hover:card">
+                            <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                                <img src="/public/images/menu-1.png" width="100" height="100" loading="lazy" alt="Greek Salad" class="img-cover">
+                            </figure>
+
+                            <div>
+                                <div class="title-wrapper">
+                                    <h3 class="title-3">
+                                        <a href="#" class="card-title">Roka Kebab Chicken</a>
+                                    </h3>
+
+                                    <span class="span title-2">£16.00</span>
+                                </div>
+
+                                <p class="card-text label-1">
+                                    Skewered spice minced lamb cooked over barbecue grill.    
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="menu-card hover:card">
+                            <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                                <img src="/public/images/menu-1.png" width="100" height="100" loading="lazy" alt="Greek Salad" class="img-cover">
+                            </figure>
+
+                            <div>
+                                <div class="title-wrapper">
+                                    <h3 class="title-3">
+                                        <a href="#" class="card-title">Chicken Beyti</a>
+                                    </h3>
+
+                                    <span class="span title-2">£13.50</span>
+                                </div>
+
+                                <p class="card-text label-1">
+                                    Barbecued spiced minced chicken rolled with tortilla on top of garlic yogurt with drizzle of butter.
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="menu-card hover:card">
+                            <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                                <img src="/public/images/menu-1.png" width="100" height="100" loading="lazy" alt="Greek Salad" class="img-cover">
+                            </figure>
+
+                            <div>
+                                <div class="title-wrapper">
+                                    <h3 class="title-3">
+                                        <a href="#" class="card-title">Lamb Beyti</a>
+                                    </h3>
+
+                                    <span class="span title-2">£13.00</span>
+                                </div>
+
+                                <p class="card-text label-1">
+                                    Barbecued spiced minced lamb rolled with tortilla on top of garlic yogurt and drizzle of butter.
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="menu-card hover:card">
+                            <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                                <img src="/public/images/menu-1.png" width="100" height="100" loading="lazy" alt="Greek Salad" class="img-cover">
+                            </figure>
+
+                            <div>
+                                <div class="title-wrapper">
+                                    <h3 class="title-3">
+                                        <a href="#" class="card-title">Ali Nazik Lamb</a>
+                                    </h3>
+
+                                    <span class="span title-2">£17.00</span>
+                                </div>
+
+                                <p class="card-text label-1">
+                                    Barbecued lamb breast over smashed aubergines with garlic yogurt and drizzle of butter.
+                                </p>
+                            </div>
+                        </div>
+                    </li>                
+
+                    <li>
+                        <div class="menu-card hover:card">
+                            <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                                <img src="/public/images/menu-1.png" width="100" height="100" loading="lazy" alt="Greek Salad" class="img-cover">
+                            </figure>
+
+                            <div>
+                                <div class="title-wrapper">
+                                    <h3 class="title-3">
+                                        <a href="#" class="card-title">Vegetarian Moussaka</a>
+                                    </h3>
+
+                                    <span class="span title-2">£14.50</span>
+                                </div>
+
+                                <p class="card-text label-1">
+                                    Fried aubergine, potatoes with carrot paprikas courgettes onions garlic and bechamel sauce with rich tomato sauce.
+                                </p>
+                            </div>
+                        </div>
+                    </li>        
+                    -->
+                </ul>
+
+                
+
+                <img src="/public/images/shape-5.png" width="921" height="1036" loading="lazy" alt="shape" class="shape shape-2 move-anim">
+
+                <img src="/public/images/shape-6.png" width="343" height="345" loading="lazy" alt="shape" class="shape shape-3 move-anim">
+
+            </div>
+         </section> 
+    </main>
+    <script src="/public/javascripts/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <script>
+        async function loadMenu(){
+            try {
+            const res = await axios.get("/api/menuItems");
+            console.log(res.data.data);
+            const tbody = document.querySelector(".grid-list");
+            tbody.innerHTML = "";
+            const menuItems = res.data.data;
+
+            menuItems.forEach(item => {
+                const li = document.createElement("li");
+                
+                li.innerHTML = `
+                    
+                        <div class="menu-card hover:card">
+                            <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                                <img src="/public/images/menu-1.png" width="100" height="100" loading="lazy" alt="Greek Salad" class="img-cover">
+                            </figure>
+
+                            <div>
+                                <div class="title-wrapper">
+                                    <h3 class="title-3">
+                                        <a href="#" class="card-title">${item.name}</a>
+                                    </h3>
+
+                                    <span class="badge label-1">Seasonal</span>
+
+                                    <span class="span title-2">£${item.price}</span>
+                                </div>
+
+                                <p class="card-text label-1">
+                                    Lamb kofte kebab on turkish flat bread with rich tomato sauce yogurt and drizzle of butter.      
+                                </p>             
+                            </div>
+                        </div>      
+          `;
+          tbody.appendChild(li);
+        });
+            
+          
+        }catch (err) {
+        console.error("Error loading menuItems:", err);
+      }
+    }
+    
+    window.addEventListener("DOMContentLoaded", loadMenu);
+    </script>
+</body>
+</html>
