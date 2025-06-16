@@ -10,9 +10,21 @@ const {HTTP_CODES} = require('../config/Enum');
 const CustomError = require('./Error')
 
 module.exports = function() {
+
+    const cookieExtractor = function (req) {
+        let token = null;
+        if (req && req.cookies) {
+            token = req.cookies.token;
+        }
+        return token;
+    };
+
     let strategy = new Strategy({
         secretOrKey: config.JWT.SECRET,
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+        jwtFromRequest: ExtractJwt.fromExtractors([
+            ExtractJwt.fromAuthHeaderAsBearerToken(),
+            cookieExtractor
+        ])
     }, async (payload, done)=>{
         try {
             let user = await Users.findOne( { _id: payload.id});

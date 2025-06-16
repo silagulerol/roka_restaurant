@@ -104,15 +104,22 @@ router.post('/auth', async (req, res, next) => {
     }
 
     let token = jwt.encode(payload, config.JWT.SECRET);
-
+    const manager_role_id = "684b5260c6819a4670387f95";
     let userData = {
       _id: user._id,
       role_id : userRole.role_id,
       first_name: user.first_name,
-      last_name: user.last_name
+      last_name: user.last_name,
+      manager_role_id: manager_role_id,
     }
     
-    res.json(Response.successResponse({token, user: userData}));
+    res
+     .cookie('token', token, {
+       httpOnly: true,
+       secure: false, // Set to true if using HTTPS
+       maxAge: 60 * 60 * 1000 // 1 hour
+     })
+     .json(Response.successResponse({token, user: userData}));
 
   }catch(err){
     let errorResponse = Response.errorResponse(err);
@@ -120,10 +127,31 @@ router.post('/auth', async (req, res, next) => {
   }
  });
 
+
+
 router.all('*', auth.authenticate(), (req, res, next) => {
     next();
 });
 
+router.get('/customer_home', (req, res) => {
+    res.render("index_logged_in",{ user: req.user });
+});
+
+router.get('/manager_home',auth.checkRoles("all_orders_view"), (req, res) => {
+    res.render("index_manager", { user: req.user });
+});
+
+router.get('/reservations',auth.checkRoles("reservations_add"), (req, res) => {
+    res.render("reservations", { user: req.user });
+});
+
+router.get('/orders',auth.checkRoles("orders_view"), (req, res) => {
+    res.render("orders", { user: req.user });
+});
+
+router.get('/manager_order', auth.checkRoles("all_orders_view"), (req, res) => {
+    res.render("manager_order", { user: req.user });
+});
 
 
 router.get('/', auth.checkRoles("user_view"), async (req, res,next)=> {

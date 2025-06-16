@@ -1,130 +1,16 @@
-<div class="menu-category">
-  <h2 class="category-title">Cold Starters</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot Reservation Assistant</title>
+</head>
+<body>
+  <h2>Need help? Chat with us!</h2>
 
-  <div class="menu-item">
-    <div class="item-info">
-      <h3 class="item-name">Mixed Meze</h3>
-    </div>
-    <div class="item-price-add">
-      <span class="item-price">£15.00</span>
-      <button class="add-btn">+</button>
-    </div>
-  </div>
-
-   <img src="${item.image}" alt="${item.name}" class="menu-img">
-            <h3>${item.name}</h3>
-            <p class="ingredients">${item.ingredients}</p>
-            <p class="price">$${item.price}</p>
-            <button onclick="addToCart('${item.name}', ${item.price})">Add to Order</button>
-          
-            .menu-category {
-  padding: 20px;
-  background-color: white;
-  max-width: 600px;
-  margin: 0 auto;
-  font-family: 'DM Sans', sans-serif;
-}
-
-.category-title {
-  font-size: 1.6rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-  background-color: black;
-  color: white;
-  padding: 10px;
-}
-
-.menu-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  border-bottom: 1px solid #ddd;
-  padding: 15px 0;
-}
-
-.item-info {
-  max-width: 75%;
-}
-
-.item-name {
-  margin: 0;
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.item-desc {
-  margin: 4px 0 0;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.item-price-add {
-  text-align: right;
-  min-width: 80px;
-}
-
-.item-price {
-  display: block;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.add-btn {
-  font-size: 1.1rem;
-  background-color: white;
-  border: 2px solid
-
-
-
-
-
-
-
-  
-  <script>
-    window.addEventListener("DOMContentLoaded", async () => {
-        const res = await axios.get("/api/menuitems");
-        const menuItems = res.data.data;
-        const container = document.getElementById("menuItem");
-        const helloHeading = document.createElement("h1");
-        helloHeading.style.color = "black";
-        helloHeading.textContent = "hello";
-        container.appendChild(helloHeading);
-
-        menuItems.forEach(item => {
-          const card = document.createElement("div");
-
-          card.className = "menu-card";
-          card.innerHTML = `
-            <div class="menu-item" style="display:flex;justify-content: space-between;align-items: flex-start;border-bottom: 1px solid #ddd; padding: 15px 0;">
-                <div class="item-info" style=" max-width: 75%;">
-                    <h3 class="item-name" style=" color:white; margin: 0;font-weight: 600; font-size: 1.1rem;">${item.name}</h3>
-                </div>    
-            <div class="item-price-add" style="text-align: right; min-width: 80px;">
-                <span class="item-price" style="display: block;font-size: 1rem;font-weight: bold; margin-bottom: 8px;color:white">${item.price}</span>
-                <button onclick="addToCart('${item.name}', ${item.price}) class="add-btn" style="font-size: 1.1rem;background-color: white;border: 2px solid">+</button>
-            </div>
-           `;
-          container.appendChild(card);
-        });
-    });
-    let cartItems = [];
-
-    function addToCart(name, price) {
-      cartItems.push({ name, price });
-      renderCart();
-    }
-
-    function renderCart() {
-      const list = document.getElementById("orderItems");
-      list.innerHTML = "";
-      cartItems.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = ${item.name} - ${item.price};
-        list.appendChild(li);
-      });
-    }
-
-
+  <!-- Chatbot will be automatically rendered by this script -->
+  <script
+    src="https://unpkg.com/react-stackai@latest/dist/vanilla/vanilla-stackai.js"
+    data-project-url="https://www.stack-ai.com/embed/6b2cfb05-c02c-4a17-8604-9a382d4ca77a/c096903b-b527-43ce-8c51-27fb524a46be/684fc5bf732ce1e8beaf2115">
   </script>
+</body>
+</html>

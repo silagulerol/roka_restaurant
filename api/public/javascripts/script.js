@@ -69,39 +69,6 @@ window.addEventListener("scroll", function () {
     }
 })
 
-/* RESERVATIONS AND ORDERS*/
-document.querySelector("#myOrders").addEventListener('click', async () => {
-  const token = localStorage.getItem("token");
-  try {
-    const response = await axios.get('/api/orders', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    // Store orders in sessionStorage and redirect
-    sessionStorage.setItem('orders', JSON.stringify(response.data.data));
-    window.location.href = '/orders-page';
-  } catch (err) {
-    alert("Unauthorized or failed to fetch orders");
-  }
-});
-
-document.querySelector("#myReservations").addEventListener('click', async () => {
-  const token = localStorage.getItem("token");
-  try {
-    const response = await axios.get('/api/reservations', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    sessionStorage.setItem('reservations', JSON.stringify(response.data.data));
-    window.location.href = '/reservations-page';
-  } catch (err) {
-    alert("Unauthorized or failed to fetch reservations");
-  }
-});
-
-
 /*
 hero slider
 */

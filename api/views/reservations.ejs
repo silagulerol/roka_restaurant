@@ -47,7 +47,6 @@
             <div class="form reservation-form bg-black-10">
 
                 <form class="form-left" id="form_add">
-                    <a class="headline-1 text-center" href="/home_logged_in">CLICK FOR GO TO HOME PAGE </a>
                     <br>
                     <h2 class="headline-1 text-center">Online Reservation</h2>
 
@@ -351,10 +350,14 @@
 
         reservations.forEach((r) => {
           const tr = document.createElement("tr");
+          const dateObj = new Date(r.reservationTime);
+          const formattedDate = `${String(dateObj.getDate()).padStart(2, '0')}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${dateObj.getFullYear()}`;
+  
+          const formattedHour = r.reservationHour?.slice(0, 5) || "--:--";
 
           tr.innerHTML = `
-            <td style="padding: 8px;">${r.reservationTime}</td>
-            <td style="padding: 8px;">${r.reservationHour}</td>
+            <td style="padding: 8px;">${formattedDate}</td>
+            <td style="padding: 8px;">${formattedHour}</td>
             <td style="padding: 8px;">${r.personNum}</td>
             <td style="padding: 8px;">${r.phone || "-"}</td>
             <td style="padding: 8px;">${r.message || ""}</td>
