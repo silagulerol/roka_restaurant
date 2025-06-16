@@ -1,0 +1,10 @@
+services: 
+  app:
+    image: silagulerol/roka_restaurant:latest
+    environment:
+      - CONNECTION_STRING=mongodb://host.docker.internal:27017/roka_restaurant
+      - LOG_LEVEL=info
+      - FILE_UPLOAD_PATH:data/uploads
+    ports:
+      - "3000:3000"
+    #network_mode: host
