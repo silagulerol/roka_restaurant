@@ -37,12 +37,24 @@
 <body id="top">
   <%- include('preloader') %>
   <%- include('top_bar') %>
-  <%- include('header') %>
+  <%- include('header_logged_in') %>
 
   <main>
     <%- include('home') %>
   </main>
+  
+  
+  <script src="/public/javascripts/script.js"></script>
+   <script
+    src="https://unpkg.com/react-stackai@latest/dist/vanilla/vanilla-stackai.js"
+    data-project-url="https://www.stack-ai.com/embed/6b2cfb05-c02c-4a17-8604-9a382d4ca77a/c096903b-b527-43ce-8c51-27fb524a46be/684fc5bf732ce1e8beaf2115">
+  </script>
+        <!--
+    ionicon link
+   -->
+   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-  <%- include('script') %>
+      
 </body>
 </html>
