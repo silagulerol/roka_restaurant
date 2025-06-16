@@ -2,7 +2,7 @@ services:
   app:
     image: silagulerol/roka_restaurant:latest
     environment:
-      - CONNECTION_STRING=mongodb+srv://roka:JsoMR1z8VhIxKhGO@cluster.rairmof.mongodb.net/?retryWrites=true&w=majority&appName=Cluster
+      - CONNECTION_STRING=mongodb+srv://roka:JsoMR1z8VhIxKhGO@cluster.rairmof.mongodb.net/roka_restaurant?retryWrites=true&w=majority
       - LOG_LEVEL=info
       - FILE_UPLOAD_PATH:data/uploads
     ports:

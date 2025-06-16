@@ -15,8 +15,13 @@ class Database {
     async connect(options) {
         try {
             console.log("DB is connecting");
-
+            mongoose.connection.once("open", () => {
+              console.log("✅ Mongoose bağlandı:", mongoose.connection.name);
+            });
+            
             this.mongoConnection = await mongoose.connect(options.CONNECTION_STRING );
+
+            
             console.log("DB is connected");
 
         }catch(err){
