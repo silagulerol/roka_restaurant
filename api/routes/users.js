@@ -141,13 +141,8 @@ router.get('/manager_home',auth.checkRoles("all_orders_view"), (req, res) => {
     res.render("index_manager", { user: req.user });
 });
 
-router.get('/reservations',auth.checkRoles("reservations_add"), (req, res) => {
-    res.render("reservations", { user: req.user });
-});
 
-router.get('/orders',auth.checkRoles("orders_view"), (req, res) => {
-    res.render("orders", { user: req.user });
-});
+
 
 router.get('/manager_order', auth.checkRoles("all_orders_view"), (req, res) => {
     res.render("manager_order", { user: req.user });

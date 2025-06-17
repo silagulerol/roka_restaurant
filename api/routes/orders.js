@@ -21,6 +21,11 @@ router.all('*', auth.authenticate(), (req, res, next) => {
     next();
 });
 
+
+router.get('/orders',auth.checkRoles("orders_view"), (req, res) => {
+    res.render("orders", { user: req.user });
+});
+
 router.get('/', async (req, res, next) => {
   try {
     const userPrivileges = req.user.roles.map(r => r?.key).filter(Boolean);
