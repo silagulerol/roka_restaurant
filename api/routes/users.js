@@ -142,7 +142,7 @@ router.get('/manager_home',auth.checkRoles("all_orders_view"), (req, res) => {
 });
 
 
-router.get('/reservations',auth.checkRoles("reservations_add"), (req, res) => {
+router.get('/reservations', auth.checkRoles("reservations_add"), (req, res) => {
     res.render("reservations", { user: req.user });
 });
 

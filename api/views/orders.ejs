@@ -31,8 +31,6 @@
     }
 
   </style>
-  
-  </style>
   <style>
   :root {
     --gold-crayola: hsl(38, 61%, 73%);
@@ -189,8 +187,8 @@
   <main>
 
 <!-- order.html -->
-    <div class="ordering-page"  style="  overflow: hidden; display: flex; height: 100vh;  background-image: url('/public/images/special-dish-banner.jpg');background-size: cover; background-position: center; ">
-        <div class="left-side" id="menuItems" style =" padding: 20px; overflow-y: auto;  width: 70%; display: flex; flex-wrap: wrap; gap: 20px;" >
+    <div class="ordering-page" style=" overflow: hidden; display: flex; height: 100vh; background-image: url('/public/images/special-dish-banner.jpg'); background-size: cover; background-position: center;">
+       <div class="left-side" id="menuItems" style =" padding: 20px; overflow-y: auto;  width: 70%; display: flex; flex-wrap: wrap; gap: 20px;" >
             <!-- Menu items will be dynamically inserted here -->
              
         <section class="menu-order-section" style="padding: 0;margin: 0%; margin-top: 20px;width:100%; background-color: transparent; color: white; ">
@@ -213,7 +211,7 @@
         </section>
         </div>
 
-
+        <!-- order.html
         <div class="right-side" id="cart" style ="margin: 20px;  margin-block-start: 50px; padding: 20px; overflow-y: overlay;  width: 35%; background-color:var(--gold-crayola); " >
           <h2>Your Basket</h2>
           
@@ -261,9 +259,52 @@
               <button id="clearOrders" style="display:none; padding: 2px; background-color: var(--gold-crayola); color: white;" onclick="clearOrders()">Clear All Orders</button>
          </section>
         </div>
-
+ -->
+        
+        <div class="right-side" id="cart" >
+          <h2>Your Basket</h2>
+        
+          <section class="order-items-section">
+            <h2 class="headline-1 text-center">Your Completed Orders</h2>
+            <table id="completedOrders">
+              <thead>
+                <tr>
+                  <th>Collection Hours</th>
+                  <th>Prices</th>
+                  <th>Items</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="completedOrderItemsBody">
+                <!-- Dynamically generated rows -->
+              </tbody>
+            </table>
+          </section>
+        
+          <section class="order-items-section">
+            <h2 class="headline-1 text-center">Add New Order</h2>
+            <label for="collectionDate">Collection Date:</label>
+            <input type="date" id="collectionDate" />
+          
+            <label for="collectionHour">Collection Hour:</label>
+            <input type="time" id="collectionHour" />
+          
+            <table id="orderItems">
+              <thead>
+                <tr>
+                  <th>Items</th>
+                  <th>Prices</th>
+                </tr>
+              </thead>
+              <tbody id="orderItemsBody">
+                <!-- New order items go here -->
+              </tbody>
+            </table>
+          
+            <button id="submitOrder" onclick="submitOrder()">Submit Order</button>
+            <button id="clearOrders" onclick="clearOrders()">Clear All Orders</button>
+          </section>
         </div>
-
       
     </div>
 
@@ -380,7 +421,7 @@
                 ${i.items.map(item => `<li>${item.name}</li>`).join('')}
               </ol>
             </td>
-            <td style="padding: 12px; color: black ;border-bottom: 1px solid white;">${i.isActive}</td>
+            <td style="padding: 12px; color: black ;border-bottom: 1px solid white;">${i.is_active}</td>
             <td style="padding: 12px; color: black ;border-bottom: 1px solid white;">
               <button  style="color: white" onclick="deleteOrder(this, '${i._id}')">Delete</button>
             </td>

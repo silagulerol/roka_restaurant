@@ -8,24 +8,39 @@
       --gold-crayola: hsl(38, 61%, 73%);
     }
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: var(--gold-crayola);
+   body {
       margin: 0;
-      padding: 40px;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('/public/images/testimonial-bg.jpg') no-repeat center center/cover;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
     }
 
     .form-container {
-      background-color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.95);
       padding: 30px 40px;
-      border-radius: 10px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+      width: 90%;
       max-width: 400px;
+      z-index: 2;
+      animation: slide-in 0.8s ease-out;
+    }
+
+    @keyframes slide-in {
+      0% {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h2 {
