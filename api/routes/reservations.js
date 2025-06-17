@@ -20,9 +20,6 @@ router.all('*', auth.authenticate(), (req, res, next) => {
     next();
 });
 
-router.get('/reservations',auth.checkRoles("reservations_add"), (req, res) => {
-    res.render("reservations", { user: req.user });
-});
 
 router.get('/', async (req, res, next) => {
   try {

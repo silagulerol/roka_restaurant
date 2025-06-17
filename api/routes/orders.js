@@ -22,9 +22,6 @@ router.all('*', auth.authenticate(), (req, res, next) => {
 });
 
 
-router.get('/orders',auth.checkRoles("orders_view"), (req, res) => {
-    res.render("orders", { user: req.user });
-});
 
 router.get('/', async (req, res, next) => {
   try {
