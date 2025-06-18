@@ -176,7 +176,7 @@
         if (user.role_id == user.manager_role_id){
           window.location.href = "api/users/manager_home";  
         }else{
-          window.location.href = "api/users/customer_home";  // redirect to protected route
+          window.location.href = "api/users/customer_home";  
         }
       } catch (err) {
         alert(err.response?.data?.error?.description || "Login failed");

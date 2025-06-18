@@ -155,6 +155,10 @@ router.get('/manager_order', auth.checkRoles("all_orders_view"), (req, res) => {
     res.render("manager_order", { user: req.user });
 });
 
+router.get('/logout', (req, res) => {
+  res.clearCookie('token'); // clear the cookie
+  res.redirect('/login');   // or redirect to homepage/login page
+});
 
 router.get('/', auth.checkRoles("user_view"), async (req, res,next)=> {
     try {
