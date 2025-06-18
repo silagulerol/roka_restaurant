@@ -31,8 +31,6 @@
     }
 
   </style>
-  
-    
   <style>
     #cart {
   margin: 40px auto;
@@ -117,8 +115,7 @@
 }
 
   </style>
-  </style>
-    <!--
+   <!--
     preload images
    -->
     <link rel="preload" as="image" href="/public/images/hero-slider-1.jpeg">
@@ -190,7 +187,6 @@
          </section>
         </div>
         
-        </div>
 
       
     </div>
@@ -240,7 +236,7 @@
               </ol>
             </td>
             <td style="padding: 12px;border-bottom: 1px solid white;">
-              <button  class="btn btn-secondary" style="color: white; height: 50%;" onclick="deleteOrder(this, '${i._id}')">Delete</button>
+              <button  class="btn btn-secondary" style="color: white; height: 50%;" onclick="deleteOrder('${i._id}'); deleteRow(this);">Delete</button>
               <br>
               <button class="btn btn-secondary" style="color: white; height: 50%;" onclick="accept(this, '${i._id}', '${i.price}', '${i.created_by?.first_name}','${i.created_by?.last_name}')">Accept</button>
             </td>
@@ -271,7 +267,7 @@
             <td style="padding: 2px; background-color: var(--gold-crayola); color: var(--black);">${last_name}</td>
             <td style="padding: 2px; background-color: var(--gold-crayola); color: var(--black);">${price}</td>
             <td style="padding: 2px;">
-                  <button  style="padding: 2px; background-color: var(--gold-crayola); color: var(--black);" onclick="deleteRow(this)">Delete</button>
+                  <button  style="padding: 2px; background-color: var(--gold-crayola); color: var(--black);" onclick="deleteOrder('${orderId}'); deleteRow(this);">Delete</button>
             </td>
            `     
             tbody.appendChild(tr);
@@ -283,7 +279,7 @@
                 price:price,
                 first_name: first_name,
                 last_name: last_name,
-                is_active: true
+                isActive: true
             }
 
             const res = await axios.post("/api/orders/update", payload, {
@@ -302,7 +298,8 @@
       }
     }
     
-    async function deleteOrder(buttonElement, orderId){
+    
+    async function deleteOrder(orderId){
       try {
         const token = localStorage.getItem("accessToken");
             if (!token) {
@@ -313,14 +310,8 @@
                 Authorization: `Bearer ${token}`
               }
         });
-
-        const row= buttonElement.closest("tr");
-        if (row) {
-        row.remove();
-        }
-
-        
-
+      
+       
       } catch(err){
         console.error("Error deleting orders:", err);
       }
