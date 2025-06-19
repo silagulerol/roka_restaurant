@@ -7,6 +7,7 @@ const schema = mongoose.Schema({
     last_name:String,
     personNum: String,
     message:String,
+    phone: String,
     accepted: Boolean,
     is_active:Boolean,
     created_by: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},

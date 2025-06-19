@@ -56,11 +56,11 @@
                     </p>
 
                     <div class="input-wrapper">
-                        <input type="text" name="first_name" id="first_name" placeholder="First Name" autocomplete="off" class="input-field">
+                        <input type="text" name="first_name" id="first_name" placeholder="First Name (if you do not enter another your first name name will be saved)" autocomplete="off" class="input-field">
                         
-                        <input type="text" name="last_name" id="last_name"  placeholder="Last Name" autocomplete="off" class="input-field">
+                        <input type="text" name="last_name" id="last_name"  placeholder="Last Name (if you do not enter another your first name name will be saved)" autocomplete="off" class="input-field">
 
-                        <input type="tel" name="phone" id="phone" autocomplete="off" placeholder="Phone Number" autocomplete="off" class="input-field">
+                        <input type="tel" name="phone" id="phone" autocomplete="off" placeholder="Phone Number - Not required" autocomplete="off" class="input-field">
 
                     </div>
 
@@ -113,7 +113,7 @@
 
                     </div>
 
-                    <textarea name="message" id="message" placeholder="Message" autocomplete="off" class="input-field"></textarea>
+                    <textarea name="message" id="message" placeholder="Message - Not required" autocomplete="off" class="input-field"></textarea>
                     
                     <button type="submit" value="Submit" class="btn btn-secondary">
                         <span class="text text-1">Book A Table</span>
@@ -433,6 +433,7 @@
           const reservationTime = form["reservation-date"].value;
           const reservationHour = form.time.value;
           const message = form.message.value;
+          
 
           const body = {
                 _id: id,

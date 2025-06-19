@@ -59,11 +59,13 @@ router.post('/add', auth.checkRoles("reservations_add"),async (req,res,next) => 
         if (!body.personNum)  throw new CustomError(HTTP_CODES.BAD_REQUEST, "validation error", "personNum field must be filled");
         if (!body.reservationHour)  throw new CustomError(HTTP_CODES.BAD_REQUEST, "validation error", "reservationHour field must be filled");
         
+
         let reservation = await Reservations.create({
             first_name: body.first_name,
             last_name: body.last_name,
             reservationTime: body.reservationTime,
             reservationHour: body.reservationHour,
+            phone: body.phone,
             message:body.message,
             personNum: body.personNum,
             created_by: req.user.id,
