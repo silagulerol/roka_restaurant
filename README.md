@@ -34,9 +34,6 @@ A full-stack web application for managing restaurant reservations and online ord
 
 ---
 
-
----
-
 ## Authentication & Roles
 
 - **JWT-based** secure login for both customers and managers
